@@ -110,7 +110,11 @@ fun! s:RgPathContext(search, txt)
 endfun
 
 fun! s:RgHighlight(txt)
-  let @/=escape(substitute(a:txt, '"', '', 'g'), '|')
+  let l:hl = substitute(a:txt, '"', '', 'g')
+  let l:hl = substitute(l:hl, '^\\b', '\\<', 'g')
+  let l:hl = substitute(l:hl, '\\b$', '\\>', 'g')
+
+  let @/=escape(l:hl, '|')
   call feedkeys(":let &hlsearch=1\<CR>", 'n')
 endfun
 
